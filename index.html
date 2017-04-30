@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz</title>
+
+    <link href="https://styleguide.brainly.com/77.2.0/style-guide.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
+
+</head>
+<body>
+    <div class="q-app">
+        <div class="q-header">
+            <h2 class="sg-header-primary sg-header-primary--light q-col">Quiz</h2>
+        </div>
+        <div class="q-timer">
+            <h2 class="sg-header-secondary sg-header-secondary--light q-col">
+                Pozostały czas <span id="q-timer__minutes">00</span>:<span id="q-timer__seconds">00</span>
+            </h2>
+        </div>
+        <div class="q-view" id="q-view">
+            <div class="q-scroll-container">
+                <!-- Templates go here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- html templates -->
+    <script type="text/html" id="main-page">
+        <div class="q-page q-page--main q-page--vertical-center q-page--horizontal q-col" id="page-0">
+            <div class="sg-content-box q-page__content">
+                <div class="sg-content-box__title">
+                    <h2 class="sg-header-primary--small">Witamy w krótkim teście wiedzy ogólnej</h2>
+                </div>
+                <div class="sg-content-box__content">
+                    <div class="sg-text">
+                        Test składa się z %questionsAmount nie powiązanych ze sobą pytań.
+                        Na wykonanie testu będziesz mieć około %time minut.
+                        Na poszczególne pytania nie ma limitu czasu, limit dotyczy całego testu. Powodzenia!
+                    </div>
+                </div>
+                <div class="sg-content-box__actions" id="quiz__start">
+                    <a class="sg-button-primary q-button-submit">
+                        Rozpocznij test
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/html" id="quiz-page">
+        <div class="q-page q-page--vertical-center q-page--horizontal-center q-page--hide q-col" id="%id">
+            <div class="q-page__content">
+                <div class="sg-box sg-box--full">
+                    <h2 class="sg-header-primary--small">%question</h2>
+                </div>
+                <div class="sg-box sg-box--full sg-box--large-padding q-box">
+                    <ul class="sg-list sg-list--spaced-elements">
+                        <li class="sg-list__element">
+                            <div class="sg-list__icon sg-list__icon--spacing-right-small">
+                                <div class="sg-radio">
+                                    <input class="sg-radio__element" name="%id-radio" id="%id-radio-0" type="radio">
+                                    <label class="sg-radio__ghost" for="%id-radio-0"></label>
+                                </div>
+                            </div>
+                            <div class="sg-text sg-text--small">%answer1</div>
+                        </li>
+                        <li class="sg-list__element ">
+                            <div class="sg-list__icon sg-list__icon--spacing-right-small">
+                                <div class="sg-radio">
+                                    <input class="sg-radio__element" name="%id-radio" id="%id-radio-1" type="radio">
+                                    <label class="sg-radio__ghost" for="%id-radio-0"></label>
+                                </div>
+                            </div>
+                            <div class="sg-text sg-text--small">%answer2</div>
+                        </li>
+                        <li class="sg-list__element">
+                            <div class="sg-list__icon sg-list__icon--spacing-right-small">
+                                <div class="sg-radio">
+                                    <input class="sg-radio__element" name="%id-radio" id="%id-radio-2" type="radio">
+                                    <label class="sg-radio__ghost" for="%id-radio-0"></label>
+                                </div>
+                            </div>
+                            <div class="sg-text sg-text--small">%answer3</div>
+                        </li>
+                        <li class="sg-list__element">
+                            <div class="sg-list__icon sg-list__icon--spacing-right-small">
+                                <div class="sg-radio">
+                                    <input class="sg-radio__element" name="%id-radio" id="%id-radio-3" type="radio">
+                                    <label class="sg-radio__ghost" for="%id-radio-0"></label>
+                                </div>
+                            </div>
+                            <div class="sg-text sg-text--small">%answer4</div>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sg-button-primary sg-button-primary--disabled q-button-submit" id="%id-submit" disabled>
+                    Następne pytanie
+                </button>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/html" id="summary-page">
+        <div class="q-page q-page--vertical-center q-page--horizontal-center q-page--hide q-col" id="%id">
+            <div class="sg-content-box q-page__content">
+                <div class="sg-content-box__title">
+                    <h2 class="sg-header-primary--small">Podsumowanie</h2>
+                </div>
+                <div class="sg-content-box__content">
+                    <div class="sg-text">
+                        Twój wynik to:
+                        <span id="score"></span> /
+                        <span id="max-score"></span>
+                    </div>
+                    <div id="summary-list">
+                        <!-- question-summary templates go here-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/html" id="question-summary">
+        <div class="q-page__content q-summary">
+            <div class="sg-box sg-box--full q-summary__question">
+                <h2 class="sg-header-primary--small">%question</h2>
+            </div>
+            <div class="sg-box sg-box--full sg-box--large-padding q-box q-summary__answers">
+                <ul class="sg-list sg-list--spaced-elements">
+                    <li class="sg-list__element">
+                        <div class="sg-text sg-text--small q-summary__answer %proper-1">%answer1</div>
+                    </li>
+                    <li class="sg-list__element ">
+                        <div class="sg-text sg-text--small q-summary__answer %proper-2">%answer2</div>
+                    </li>
+                    <li class="sg-list__element">
+                        <div class="sg-text sg-text--small q-summary__answer %proper-3">%answer3</div>
+                    </li>
+                    <li class="sg-list__element">
+                        <div class="sg-text sg-text--small q-summary__answer %proper-4">%answer4</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </script>
+
+    <!-- js scripts -->
+    <script src="services/ajax.service.js"></script>
+    <script src="models/quiz.model.js"></script>
+    <script src="controllers/quiz.controller.js"></script>
+    <script src="views/quiz.renderer.js"></script>
+    <script src="app.js"></script>
+
+    <script src="https://styleguide.brainly.com/images/icons-5459066133.js"></script>
+    <script src="https://styleguide.brainly.com/images/subjects-icons-a297b895eb.js"></script>
+</body>
+</html>
